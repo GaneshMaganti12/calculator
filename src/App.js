@@ -46,9 +46,13 @@ function App() {
       }
     }
     if(float){
-        arr.push(parseFloat(string))
+      arr.push(parseFloat(string))
     }else{
-      arr.push(parseInt(string))
+      if(arr.length === 0 && bool){
+        arr.push(parseInt("-" + string))
+      }else{
+        arr.push(parseInt(string))
+      }
     }
     return arr
   }
@@ -59,38 +63,43 @@ function App() {
       const array = calculate(str)
       
       const symbol = ["%", "/", "*", "+", "-"]
-      
-      for (let sym of symbol){
-        if(array.includes(sym)){
-          let res
-          for (let i=0; i<array.length; i++){
-            if(sym === array[i]){
-              switch (array[i]) {
-                case '%':
-                  res = array[i-1] % array[i+1]
-                  break;
-                case '/':
-                  res = array[i-1] / array[i+1]
-                  break;
-                case '*':
-                  res = array[i-1] * array[i+1]
-                  break;
-                case '+':
-                  res = array[i-1] + array[i+1]
-                  break;
-                case '-':
-                  res = array[i-1] - array[i+1]
-                  break;
-                default:
-                  return res
+
+      if(array.length > 3){
+        for (let sym of symbol){
+          if(array.includes(sym)){
+            let res
+            for (let i=0; i<array.length; i++){
+              if(sym === array[i]){
+                switch (array[i]) {
+                  case '%':
+                    res = array[i-1] % array[i+1]
+                    break;
+                  case '/':
+                    res = array[i-1] / array[i+1]
+                    break;
+                  case '*':
+                    res = array[i-1] * array[i+1]
+                    break;
+                  case '+':
+                    res = array[i-1] + array[i+1]
+                    break;
+                  case '-':
+                    res = array[i-1] - array[i+1]
+                    break;
+                  default:
+                    return res
+                }
+                array.splice(i-1,3,res)
+                i -= 1
               }
-              array.splice(i-1,3,res)
-              i -= 1
             }
           }
         }
+        setAnswer(array)
+      }else{
+        setAnswer(array.join("").slice(0,array.length-1))
       }
-      setAnswer(array)
+
     }else{
       setAnswer("")
     }
