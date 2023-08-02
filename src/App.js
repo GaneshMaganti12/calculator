@@ -16,6 +16,7 @@ function App() {
     let arr = []
     let string = ""
     let bool, b = 0
+    let float
     
     if(str[0] === "-"){
       b = 1; bool = true
@@ -25,11 +26,17 @@ function App() {
       const char = str.charAt(i)
       
       if(!isNaN(char) || char === "."){
+        if(char === "."){
+          float = true
+        }
         string += char
       }else{
         if(arr.length === 0 && bool){
           arr.push(parseInt("-" + string))
-        }else{
+        }else if(float){
+          arr.push(parseFloat(string))
+        }
+        else{
           arr.push(parseInt(string))
         }
           
@@ -38,7 +45,11 @@ function App() {
       
       }
     }
-    arr.push(parseInt(string))
+    if(float){
+        arr.push(parseFloat(string))
+    }else{
+      arr.push(parseInt(string))
+    }
     return arr
   }
 
