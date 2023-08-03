@@ -11,7 +11,7 @@ function App() {
       setAnswer(answer + e.target.value)
     }
   }
-
+ 
   function calculate(str){
     let arr = []
     let string = ""
@@ -58,13 +58,13 @@ function App() {
   }
 
   function calculatedOutput(){
-    if(answer){
+    if(answer && answer !== "-"){
       const str = answer
       const array = calculate(str)
       
       const symbol = ["%", "/", "*", "+", "-"]
 
-      if(array.length > 3){
+      if(array.length > 1){
         for (let sym of symbol){
           if(array.includes(sym)){
             let res
@@ -97,11 +97,11 @@ function App() {
         }
         setAnswer(array)
       }else{
-        setAnswer(array.join("").slice(0,array.length-1))
+        setAnswer(array.join(""))
       }
 
     }else{
-      setAnswer("")
+      setAnswer(answer)
     }
   }
 
